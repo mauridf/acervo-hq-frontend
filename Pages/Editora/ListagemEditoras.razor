@@ -1,0 +1,104 @@
+@page "/editoras"
+@inject EditoraService editoraService
+@inject NavigationManager navigationManager
+
+<h3>Lista de Editoras</h3>
+<br>
+<a class="btn btn-primary" @onclick="IncluirEditora">Incluir Editora</a> <!-- Link para a página de inclusão -->
+<br>
+@if (editoras == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Editora</th>
+                <th>Ação</th> <!-- Nova coluna para os links -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var editora in editoras)
+            {
+                <tr>
+                    <td>@editora.Id</td>
+                    <td>@editora.Nome</td>
+                    <td>
+                        <a class="btn btn-success" @onclick="() => EditarEditora(editora.Id)">Editar</a> <!-- Link para a página de edição -->
+                        <a class="btn btn-danger" @onclick="() => DeletarEditora(editora.Id)">Deletar</a> <!-- Link para a página de exclusão -->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+    <div class="pagination">
+        <button class="btn btn-secondary" disabled="@(paginaAtual == 1)" @onclick="() => PaginaAnterior()">Anterior</button>
+        <span>Página @paginaAtual de @totalPaginas</span>
+        <button class="btn btn-secondary" disabled="@(paginaAtual == totalPaginas)" @onclick="() => ProximaPagina()">Próxima</button>
+    </div>
+}
+
+@code {
+    List<EditoraModel> editoras;
+    int totalPaginas;
+    int paginaAtual = 1;
+    int tamanhoPagina = 05 ; // Número de editoras por página
+
+
+    @* protected override async Task OnInitializedAsync()
+    {
+        editoras = await editoraService.GetEditoras();
+    } *@
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregarEditoras();
+    }
+
+    private async Task CarregarEditoras()
+    {
+        var (editorasPagina, totalPages) = await editoraService.GetEditorasPaginado(paginaAtual, tamanhoPagina);
+        editoras = editorasPagina;
+        totalPaginas = totalPages;
+    }
+
+    private async Task PaginaAnterior()
+    {
+        if (paginaAtual > 1)
+        {
+            paginaAtual--;
+            await CarregarEditoras();
+        }
+    }
+
+    private async Task ProximaPagina()
+    {
+        if (paginaAtual < totalPaginas)
+        {
+            paginaAtual++;
+            await CarregarEditoras();
+        }
+    }
+
+    // Método para navegar para a página de inclusão de editora
+    private void IncluirEditora()
+    {
+        navigationManager.NavigateTo("/incluir-editora"); // Substitua pelo caminho da sua página de inclusão
+    }
+
+    // Método para navegar para a página de edição de editora
+    private void EditarEditora(string id)
+    {
+        navigationManager.NavigateTo($"/editar-editora/{id}"); // Substitua pelo caminho da sua página de edição, passando o ID como parâmetro
+    }
+
+    // Método para navegar para a página de exclusão de editora
+    private void DeletarEditora(string id)
+    {
+        navigationManager.NavigateTo($"/deletar-editora/{id}"); // Substitua pelo caminho da sua página de exclusão, passando o ID como parâmetro
+    }
+}

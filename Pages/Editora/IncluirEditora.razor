@@ -1,0 +1,37 @@
+@page "/incluir-editora"
+@inject EditoraService editoraService
+@inject NavigationManager navigationManager
+
+<h3>Incluir Editora</h3>
+
+@if (mensagem != null)
+{
+    <p>@mensagem</p>
+}
+
+<form @onsubmit="HandleSubmit">
+    <div class="form-group">
+        <label for="nome">Nome da Editora:</label>
+        <input type="text" class="form-control" id="nome" @bind="editora.Nome">
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+
+@code {
+    EditoraModel editora = new EditoraModel();
+    string mensagem;
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            await editoraService.CreateEditora(editora.Nome);
+            mensagem = "Editora criada com sucesso!";
+            navigationManager.NavigateTo("/editoras");
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao criar editora: " + ex.Message;
+        }
+    }
+}

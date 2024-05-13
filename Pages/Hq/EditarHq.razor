@@ -1,0 +1,185 @@
+@page "/editar-hq/{id}"
+@inject HqService hqService
+@inject EditoraService editoraService
+@inject EdicaoService edicaoService
+@inject PersonagemService personagemService
+@inject NavigationManager navigationManager
+
+<h3>Editar HQ</h3>
+<br>
+@if (hq != null)
+{
+    <EditForm Model="hq" OnValidSubmit="Salvar">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="titulo">Título:</label>
+            <InputText id="titulo" @bind-Value="hq.Titulo" class="form-control" placeholder="Título" />
+        </div>
+        <div class="form-group">
+            <label for="tituloOriginal">Título Original:</label>
+            <InputText id="tituloOriginal" @bind-Value="hq.TituloOriginal" class="form-control" placeholder="Título Original" />
+        </div>
+        <div class="form-group">
+            <label for="categoria">Categoria:</label>
+            <InputSelect id="categoria" @bind-Value="hq.Categoria" class="form-control">
+                @foreach (var categoria in Enum.GetValues(typeof(Categoria)))
+                {
+                    <option value="@categoria">@categoria</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <label for="totalEdicoes">Total de Edições:</label>
+            <InputText id="totalEdicoes" @bind-Value="hq.TotalEdicoes" class="form-control" placeholder="Total de Edições" />
+        </div>
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <InputSelect id="status" @bind-Value="hq.Status" class="form-control">
+                @foreach (var status in Enum.GetValues(typeof(Status)))
+                {
+                    <option value="@status">@status</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <label for="observacao">Observação:</label>
+            <InputTextArea id="observacao" @bind-Value="hq.Observacao" class="form-control" placeholder="Observação" />
+        </div>
+
+        <!-- Lista suspensa para Editoras -->
+        <div class="form-group">
+            <label for="editoras">Editoras:</label>
+            <InputSelectMultiple id="editoras" @bind="hq.Editoras" class="form-control">
+                @foreach (var editora in editoras)
+                {
+                    <option value="@editora.Id">@editora.Nome</option>
+                }
+            </InputSelectMultiple>
+        </div>
+
+        <!-- Botões para adicionar e remover editoras -->
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" @onclick="AdicionarEditora">Adicionar Editora</button>
+            <button type="button" class="btn btn-danger" @onclick="RemoverEditora">Remover Editora</button>
+        </div>
+
+        <!-- Lista suspensa para Edições -->
+        <div class="form-group">
+            <label for="edicoes">Edições:</label>
+            <InputSelectMultiple id="edicoes" @bind="hq.Edicoes" class="form-control">
+                @foreach (var edicao in edicoes)
+                {
+                    <option value="@edicao.Id">@edicao.TituloEdicao</option>
+                }
+            </InputSelectMultiple>
+        </div>
+
+        <!-- Botões para adicionar e remover edições -->
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" @onclick="AdicionarEdicao">Adicionar Edição</button>
+            <button type="button" class="btn btn-danger" @onclick="RemoverEdicao">Remover Edição</button>
+        </div>
+
+        <!-- Lista suspensa para Personagens -->
+        <div class="form-group">
+            <label for="personagens">Personagens:</label>
+            <InputSelectMultiple id="personagens" @bind="hq.Personagens" class="form-control">
+                @foreach (var personagem in personagens)
+                {
+                    <option value="@personagem.Id">@personagem.Nome</option>
+                }
+            </InputSelectMultiple>
+        </div>
+
+        <!-- Botões para adicionar e remover personagens -->
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" @onclick="AdicionarPersonagem">Adicionar Personagem</button>
+            <button type="button" class="btn btn-danger" @onclick="RemoverPersonagem">Remover Personagem</button>
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button class="btn btn-danger" @onclick="Voltar">Cancelar</button>
+        <br>
+    </EditForm>
+}
+else
+{
+    <p>Hq não encontrada.</p>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    HqModel hq;
+    List<EditoraModel> editoras = new List<EditoraModel>();
+    List<EdicaoModel> edicoes = new List<EdicaoModel>();
+    List<PersonagemModel> personagens = new List<PersonagemModel>();
+    string mensagem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            hq = await hqService.GetHqById(Id);
+            editoras = await editoraService.GetEditoras();
+            edicoes = await edicaoService.GetEdicoes();
+            personagens = await personagemService.GetPersonagens();
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao carregar hq: " + ex.Message;
+        }
+    }
+
+    private async Task Salvar()
+    {
+        try
+        {
+            await hqService.UpdateHq(Id, hq);
+            navigationManager.NavigateTo($"/detalhe-completo/{Id}");
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao salvar hq: " + ex.Message;
+        }
+    }
+
+    private void Voltar()
+    {
+        navigationManager.NavigateTo($"/detalhe-completo/{Id}");
+    }
+
+    private void AdicionarEditora()
+    {
+        // Lógica para adicionar uma nova editora à lista hq.Editoras
+    }
+
+    private void RemoverEditora()
+    {
+        // Lógica para remover uma editora da lista hq.Editoras
+    }
+
+    private void AdicionarEdicao()
+    {
+        // Lógica para adicionar uma nova edição à lista hq.Edicoes
+    }
+
+    private void RemoverEdicao()
+    {
+        // Lógica para remover uma edição da lista hq.Edicoes
+    }
+
+    private void AdicionarPersonagem()
+    {
+        // Lógica para adicionar um novo personagem à lista hq.Personagens
+    }
+
+    private void RemoverPersonagem()
+    {
+        // Lógica para remover um personagem da lista hq.Personagens
+    }
+}

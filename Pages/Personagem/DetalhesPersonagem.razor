@@ -1,0 +1,54 @@
+@page "/deletar-personagem/{Id}"
+@inject PersonagemService personagemService
+@inject NavigationManager navigationManager
+
+<h3>Detalhes do Personagem</h3>
+
+@if (personagem != null)
+{
+    <div>
+        <p><strong>ID:</strong> @personagem.Id</p>
+        <p><strong>Nome:</strong> @personagem.Nome</p>
+        <p><strong>Observação:</strong> @personagem.Observacao</p>
+        <p><strong>Tipo de Personagem:</strong> @personagem.TipoPersonagem</p>
+
+        <button class="btn btn-danger" @onclick="DeletarPersonagem">Deletar</button>
+    </div>
+}
+else
+{
+    <p>Personagem não encontrado.</p>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    PersonagemModel personagem;
+    string mensagem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            personagem = await personagemService.GetPersonagemById(Id);
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao carregar personagem: " + ex.Message;
+        }
+    }
+
+    private async Task DeletarPersonagem()
+    {
+        try
+        {
+            await personagemService.DeletePersonagem(Id);
+            navigationManager.NavigateTo("/personagem");
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao excluir personagem: " + ex.Message;
+        }
+    }
+}

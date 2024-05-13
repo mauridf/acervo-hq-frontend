@@ -1,0 +1,68 @@
+@page "/editar-editora/{id}"
+@inject EditoraService editoraService
+@inject NavigationManager navigationManager
+
+<h3>Editar Editora</h3>
+
+@if (mensagem != null)
+{
+    <p>@mensagem</p>
+}
+
+@if (editora != null)
+{
+    <form @onsubmit="HandleSubmit">
+        <div class="form-group">
+            <label for="nome">Nome da Editora:</label>
+            <input type="text" class="form-control" id="nome" @bind="editora.Nome">
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+}
+else
+{
+    <p>Carregando...</p>
+}
+
+@code {
+    EditoraModel editora;
+    string mensagem;
+
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Obter os dados da editora pelo Id passado na URL
+            editora = await editoraService.GetEditoraById(Id);
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao carregar dados da editora: " + ex.Message;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            bool sucesso = await editoraService.UpdateEditora(Id, editora); // Passando o ID e o objeto editora
+
+            if (sucesso)
+            {
+                mensagem = "Editora atualizada com sucesso!";
+                navigationManager.NavigateTo("/editoras");
+            }
+            else
+            {
+                mensagem = "Erro ao atualizar editora.";
+            }
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao atualizar editora: " + ex.Message;
+        }
+    }
+}

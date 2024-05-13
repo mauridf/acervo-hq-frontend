@@ -1,0 +1,114 @@
+@page "/personagem"
+@inject PersonagemService personagemService
+@inject NavigationManager navigationManager
+
+<h3>Lista de Personagens</h3>
+<br>
+<a class="btn btn-primary" @onclick="IncluirPersonagem">Incluir Personagem</a> <!-- Link para a página de inclusão -->
+<br>
+@if (personagens == null)
+{
+    <p>Carregando...</p>
+}
+else if (personagens.Count == 0)
+{
+    <p>Nenhum personagem encontrado.</p>
+}
+else
+{
+    <table class="table">
+        <!-- Cabeçalho da tabela -->
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Personagem</th>
+                <th>Observação</th>
+                <th>Tipo de Personagem</th>
+                <th>Ação</th> <!-- Nova coluna para os links -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Corpo da tabela -->
+            @foreach (var personagem in personagens)
+            {
+                <tr>
+                    <td>@personagem.Id</td>
+                    <td>@personagem.Nome</td>
+                    <td>@personagem.Observacao</td>
+                    <td>@personagem.TipoPersonagem</td>
+                    <td>
+                        <!-- Links para editar e excluir -->
+                        <a class="btn btn-success" @onclick="() => EditarPersonagem(personagem.Id)">Editar</a>
+                        <a class="btn btn-danger" @onclick="() => DeletarPersonagem(personagem.Id)">Deletar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+    <div class="pagination">
+        <button class="btn btn-secondary" disabled="@(paginaAtual == 1)" @onclick="() => PaginaAnterior()">Anterior</button>
+        <span>Página @paginaAtual de @totalPaginas</span>
+        <button class="btn btn-secondary" disabled="@(paginaAtual == totalPaginas)" @onclick="() => ProximaPagina()">Próxima</button>
+    </div>
+}
+
+@code {
+    List<PersonagemModel> personagens;
+    int totalPaginas;
+    int paginaAtual = 1;
+    int tamanhoPagina = 05 ; // Número de personagens por página
+
+    @* protected override async Task OnInitializedAsync()
+    {
+        personagens = await personagemService.GetPersonagens();
+    } *@
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregarPersonagens();
+    }
+
+    private async Task CarregarPersonagens()
+    {
+        var (personagensPagina, totalPages) = await personagemService.GetPersonagensPaginado(paginaAtual, tamanhoPagina);
+        personagens = personagensPagina;
+        totalPaginas = totalPages;
+    }
+
+    private async Task PaginaAnterior()
+    {
+        if (paginaAtual > 1)
+        {
+            paginaAtual--;
+            await CarregarPersonagens();
+        }
+    }
+
+    private async Task ProximaPagina()
+    {
+        if (paginaAtual < totalPaginas)
+        {
+            paginaAtual++;
+            await CarregarPersonagens();
+        }
+    }
+
+    // Método para navegar para a página de inclusão de personagem
+    private void IncluirPersonagem()
+    {
+        navigationManager.NavigateTo("/incluir-personagem"); // Substitua pelo caminho da sua página de inclusão
+    }
+
+    // Método para navegar para a página de edição de personagem
+    private void EditarPersonagem(string id)
+    {
+        navigationManager.NavigateTo($"/editar-personagem/{id}"); // Substitua pelo caminho da sua página de edição, passando o ID como parâmetro
+    }
+
+    // Método para navegar para a página de exclusão de personagem
+    private void DeletarPersonagem(string id)
+    {
+        navigationManager.NavigateTo($"/deletar-personagem/{id}"); // Substitua pelo caminho da sua página de exclusão, passando o ID como parâmetro
+    }
+}

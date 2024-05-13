@@ -1,0 +1,142 @@
+@page "/detalhe-completo/{id}"
+@inject HqService hqService
+@inject EditoraService editoraService
+@inject EdicaoService edicaoService
+@inject PersonagemService personagemService
+@inject NavigationManager navigationManager
+
+<h3>Detalhe Completo da HQ</h3>
+<br>
+@if (hq != null)
+{
+    <div>
+        <p><strong>ID:</strong> @hq.Id</p>
+        <p><strong>Titulo:</strong> @hq.Titulo</p>
+        <p><strong>Titulo Original:</strong> @hq.TituloOriginal</p>
+        <p><strong>Categoria:</strong> @hq.Categoria</p>
+        <p><strong>Total de Edições:</strong> @hq.TotalEdicoes</p>
+        <p><strong>Status:</strong> @hq.Status</p>
+        <p><strong>Observação:</strong> @hq.Observacao</p>
+
+        <!-- Tabela para Editoras -->
+        <table>
+            <caption>Editoras</caption>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var editora in editoras)
+                {
+                    <tr>
+                        <td>@editora.Nome</td>
+                    </tr>
+                }
+                @if (editoras.Count == 0)
+                {
+                    <tr>
+                        <td colspan="1">Nenhuma Editora cadastrada para esta HQ.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Tabela para Edições -->
+        <table>
+            <caption>Edições</caption>
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var edicao in edicoes)
+                {
+                    <tr>
+                        <td>@edicao.TituloEdicao</td>
+                    </tr>
+                }
+                @if (edicoes.Count == 0)
+                {
+                    <tr>
+                        <td colspan="1">Nenhuma Edição cadastrada para esta HQ.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Tabela para Personagens -->
+        <table>
+            <caption>Personagens</caption>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var personagem in personagens)
+                {
+                    <tr>
+                        <td>@personagem.Nome</td>
+                    </tr>
+                }
+                @if (personagens.Count == 0)
+                {
+                    <tr>
+                        <td colspan="1">Nenhum Personagem cadastrado para esta HQ.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button class="btn btn-success" @onclick="Voltar">Voltar</button>
+    </div>
+}
+else
+{
+    <p>Hq não encontrada.</p>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    HqModel hq;
+    List<EditoraModel> editoras = new List<EditoraModel>();
+    List<EdicaoModel> edicoes = new List<EdicaoModel>();
+    List<PersonagemModel> personagens = new List<PersonagemModel>();
+    string mensagem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            hq = await hqService.GetHqById(Id);
+            foreach (var editoraId in hq.Editoras)
+            {
+                var editora = await editoraService.GetEditoraById(editoraId);
+                editoras.Add(editora);
+            }
+            foreach (var edicaoId in hq.Edicoes)
+            {
+                var edicao = await edicaoService.GetEdicaoById(edicaoId);
+                edicoes.Add(edicao);
+            }
+            foreach (var personagemId in hq.Personagens)
+            {
+                var personagem = await personagemService.GetPersonagemById(personagemId);
+                personagens.Add(personagem);
+            }
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao carregar hq: " + ex.Message;
+        }
+    }
+
+    private void Voltar()
+    {
+        navigationManager.NavigateTo($"/hq");
+    }
+}

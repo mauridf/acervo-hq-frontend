@@ -1,0 +1,52 @@
+@page "/deletar-editora/{Id}"
+@inject EditoraService editoraService
+@inject NavigationManager navigationManager
+
+<h3>Detalhes da Editora</h3>
+
+@if (editora != null)
+{
+    <div>
+        <p><strong>ID:</strong> @editora.Id</p>
+        <p><strong>Nome:</strong> @editora.Nome</p>
+
+        <button class="btn btn-danger" @onclick="DeletarEditora">Deletar</button>
+    </div>
+}
+else
+{
+    <p>Editora não encontrada.</p>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    EditoraModel editora;
+    string mensagem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            editora = await editoraService.GetEditoraById(Id);
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao carregar editora: " + ex.Message;
+        }
+    }
+
+    private async Task DeletarEditora()
+    {
+        try
+        {
+            await editoraService.DeleteEditora(Id);
+            navigationManager.NavigateTo("/editoras");
+        }
+        catch (Exception ex)
+        {
+            mensagem = "Erro ao excluir editora: " + ex.Message;
+        }
+    }
+}

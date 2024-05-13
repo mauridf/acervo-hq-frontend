@@ -1,0 +1,116 @@
+@page "/hq"
+@inject HqService hqService
+@inject NavigationManager navigationManager
+
+<h3>Lista de Hqs</h3>
+<br>
+<a class="btn btn-primary" @onclick="IncluirHq">Incluir Hq</a> <!-- Link para a página de inclusão -->
+<br>
+@if (hqs == null)
+{
+    <p>Carregando...</p>
+}
+else if (hqs.Count == 0)
+{
+    <p>Nenhum personagem encontrado.</p>
+}
+else
+{
+    <table class="table">
+        <!-- Cabeçalho da tabela -->
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Categoria</th>
+                <th>Total de Edições</th>
+                <th>Status</th>
+                <th>Ação</th> <!-- Nova coluna para os links -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Corpo da tabela -->
+            @foreach (var hq in hqs)
+            {
+                <tr>
+                    <td><a href="/detalhe-completo/@hq.Id.ToString()">@(hq.Id.ToString())</a></td>
+                    <td>@hq.Titulo</td>
+                    <td>@hq.Categoria</td>
+                    <td>@hq.TotalEdicoes</td>
+                    <td>@hq.Status</td>
+                    <td>
+                        <!-- Links para editar e excluir -->
+                        <a class="btn btn-success" @onclick="() => EditarHq(hq.Id)">Editar</a>
+                        <a class="btn btn-danger" @onclick="() => DeletarHq(hq.Id)">Deletar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+    <div class="pagination">
+        <button class="btn btn-secondary" disabled="@(paginaAtual == 1)" @onclick="() => PaginaAnterior()">Anterior</button>
+        <span>Página @paginaAtual de @totalPaginas</span>
+        <button class="btn btn-secondary" disabled="@(paginaAtual == totalPaginas)" @onclick="() => ProximaPagina()">Próxima</button>
+    </div>
+}
+
+@code {
+    List<HqModel> hqs;
+    int totalPaginas;
+    int paginaAtual = 1;
+    int tamanhoPagina = 05 ; // Número de hqs por página
+
+    @* protected override async Task OnInitializedAsync()
+    {
+        hqs = await hqService.GetHqs();
+    } *@
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregarHqs();
+    }
+
+    private async Task CarregarHqs()
+    {
+        var (hqsPagina, totalPages) = await hqService.GetHqsPaginado(paginaAtual, tamanhoPagina);
+        hqs = hqsPagina;
+        totalPaginas = totalPages;
+    }
+
+    private async Task PaginaAnterior()
+    {
+        if (paginaAtual > 1)
+        {
+            paginaAtual--;
+            await CarregarHqs();
+        }
+    }
+
+    private async Task ProximaPagina()
+    {
+        if (paginaAtual < totalPaginas)
+        {
+            paginaAtual++;
+            await CarregarHqs();
+        }
+    }
+
+    // Método para navegar para a página de inclusão de hq
+    private void IncluirHq()
+    {
+        navigationManager.NavigateTo("/incluir-hq"); // Substitua pelo caminho da sua página de inclusão
+    }
+
+    // Método para navegar para a página de edição de hq
+    private void EditarHq(string id)
+    {
+        navigationManager.NavigateTo($"/editar-hq/{id}"); // Substitua pelo caminho da sua página de edição, passando o ID como parâmetro
+    }
+
+    // Método para navegar para a página de exclusão de hq
+    private void DeletarHq(string id)
+    {
+        navigationManager.NavigateTo($"/deletar-hq/{id}"); // Substitua pelo caminho da sua página de exclusão, passando o ID como parâmetro
+    }
+}

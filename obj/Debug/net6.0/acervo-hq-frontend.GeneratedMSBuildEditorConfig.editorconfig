@@ -1,0 +1,107 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = acervo_hq_frontend
+build_property.RootNamespace = acervo_hq_frontend
+build_property.ProjectDir = C:\Projetos\.NET\acervo-hq-MongoDB\acervo-hq-frontend\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Projetos\.NET\acervo-hq-MongoDB\acervo-hq-frontend
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Editora/DetalhesEditora.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdG9yYVxEZXRhbGhlc0VkaXRvcmEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Editora/EditarEditora.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdG9yYVxFZGl0YXJFZGl0b3JhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Editora/IncluirEditora.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdG9yYVxJbmNsdWlyRWRpdG9yYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Editora/ListagemEditoras.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdG9yYVxMaXN0YWdlbUVkaXRvcmFzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Hq/DetalhesHq.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSHFcRGV0YWxoZXNIcS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Hq/EditarHq.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSHFcRWRpdGFySHEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Hq/HqDetalheCompleto.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSHFcSHFEZXRhbGhlQ29tcGxldG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Hq/IncluirHq.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSHFcSW5jbHVpckhxLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Hq/ListagemHq.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSHFcTGlzdGFnZW1IcS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Personagem/DetalhesPersonagem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWdlbVxEZXRhbGhlc1BlcnNvbmFnZW0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Personagem/EditarPersonagem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWdlbVxFZGl0YXJQZXJzb25hZ2VtLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Personagem/IncluirPersonagem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWdlbVxJbmNsdWlyUGVyc29uYWdlbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Personagem/ListagemPersonagem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWdlbVxMaXN0YWdlbVBlcnNvbmFnZW0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-wpx1c7dy8h
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-c4hahhw4gx
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/.NET/acervo-hq-MongoDB/acervo-hq-frontend/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
